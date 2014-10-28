@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Taylor's Ripped && Scratched Simple Array Decoder</title>
+	<style type="text/css">
+		textarea {
+			width: 500px;
+			height: 50px;
+		}
+		.decryptButton {
+			width: 100px;
+			height: 30px;
+			border: none;
+			color: #000000;
+			margin: 10px 0px 0px 15px;
+			padding: 0px 0px 0px 0px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="title">
+		<h1>Taylor's Ripped && Scratched Simple Array Decoder</h1>
+	</div>
+	<div class="encryptedArrayDisplay">
+		<h2>Encrypted Array:</h2>
+		<div class="encryptedArrayText">'T','h','a','i','s','b',' ','i','c','s',' ','a','t','h','e','e',' ','t','s','o','r','n','g','t',' ','t','n','h','a','s','t',' ','o','n','e','o','v','e','a','r',' ','f','e','n','a','d','s','p',',',' ','p','y','e','i','s',' ','p','i','t','o',' ','g',' ','o','e','i','s',' ','t','o','n','e',' ','a',' ','n','d',' ',' ','o','i','n',' ','a','m','y',' ',' ','f','a','r','i',' ','e','n','o','d','s','i',', ','s',' ','o','m','a','e',' ','a','p','e',' ','o','p','a','l','e','r',' ','s',' ','t','a','a','r','t',' ','e','d','u',' ','s',' ','i','n','g','g','i',' ','n','g','o',' ','i','t','t',',',' ',' ','n','i','o','t','h',' ','k','a','n','o',' ','w','i',' ','n','g','o',' ','w','r','h','a','i','t',' ','s','i','t','h',' ','w','r','a','s','h',', ','a',' ','n','d','a',' ','t','o','h','e',' ','y',' ','a','w','i','p','l','l','o',' ','c','r','o','n',' ','t','i','p','n','u','i','e',' ','t','s','i',' ','n','g',' ','i','n',' ','g',' ','s','i','t','h',', ','f','r','o','r',' ','e','v','t','e','r','t',', ','j','u','u','s','t','t',' ','a','b','e','l','c','a',' ','u','s','l','e'</div>
+	</div>
+	<div class="decryptButton">
+		<input type="button" class="decryptButton" value="Decode" onclick="decrypt(), this.setAttribute('disabled', 'disabled')"/>
+	</div>
+	<div class="decryptedArrayDisplay">
+		<h2>Decrypted Array:</h2>
+		<textarea id="decryptedArrayTextArea" readonly disabled></textarea>
+	</div>
+</body>
+<script type="text/javascript">
+	function decrypt() {
+		var array = ['T','h','a','i','s','b',' ','i','c','s',' ','a','t','h','e','e',' ','t','s','o','r','n','g','t',' ','t','n','h','a','s','t',' ','o','n','e','o','v','e','a','r',' ','f','e','n','a','d','s','p',',',' ','p','y','e','i','s',' ','p','i','t','o',' ','g',' ','o','e','i','s',' ','t','o','n','e',' ','a',' ','n','d',' ',' ','o','i','n',' ','a','m','y',' ',' ','f','a','r','i',' ','e','n','o','d','s','i',', ','s',' ','o','m','a','e',' ','a','p','e',' ','o','p','a','l','e','r',' ','s',' ','t','a','a','r','t',' ','e','d','u',' ','s',' ','i','n','g','g','i',' ','n','g','o',' ','i','t','t',',',' ',' ','n','i','o','t','h',' ','k','a','n','o',' ','w','i',' ','n','g','o',' ','w','r','h','a','i','t',' ','s','i','t','h',' ','w','r','a','s','h',', ','a',' ','n','d','a',' ','t','o','h','e',' ','y',' ','a','w','i','p','l','l','o',' ','c','r','o','n',' ','t','i','p','n','u','i','e',' ','t','s','i',' ','n','g',' ','i','n',' ','g',' ','s','i','t','h',', ','f','r','o','r',' ','e','v','t','e','r','t',', ','j','u','u','s','t','t',' ','a','b','e','l','c','a',' ','u','s','l','e'];
+		for (var j = 2; j <= array.length; j += 2) {
+			array.splice(j, 1);
+		}
+		for (var i = 0; i <= array.length - 1; i++) {
+			document.getElementById("decryptedArrayTextArea").value += array[i];
+		}
+	}
+</script>
+</html>

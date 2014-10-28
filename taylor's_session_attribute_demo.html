@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Taylor's Session Attribute Demo</title>
+	<style type="text/css">
+		.button {
+			width: 200px;
+			height: 30px;
+			border: none;
+			color: #000000;
+			margin: 10px 0px 0px 15px;
+			padding: 0px 0px 0px 0px;
+			cursor: pointer;
+		}
+		textarea {
+			width: 250px;
+			height: 75px;
+		}
+	</style>
+	<script type="text/javascript">
+		var userSession = {
+			firstName: "First",
+			lastName: "Last",
+			address1: "Address1",
+			address2: "Address2",
+			city: "City",
+			state: "State",
+			zip: "Zip"
+		};
+	</script>
+</head>
+<body>
+	<div class="title">
+		<h1>Taylor's Session Attribute Demo</h1>
+	</div>
+	<div class="sessionDisplayButton">
+		<input type="button" class="button" value="Show Session Attributes Once" onclick="displaySessionInformation(), this.setAttribute('disabled', 'disabled')">
+	</div>
+	<div class="sessionDisplay">
+		<h3>Current Session Information:</h3>
+	</div>
+	<div class="sessionDisplay">
+		<textarea id="sessionDisplay" readonly></textarea>
+	</div>
+	<div class="sessionUpdateDisplay">
+		<h3>Users Can Update Session Information Below:</h3>
+	</div>
+	<div class="sessionUpdateFirstName">
+		<input type="text" id="sessionUpdateFirstName" placeholder="First Name" onfocus="">
+	</div>
+	<div class="sessionUpdateLastName">
+		<input type="text" id="sessionUpdateLastName" placeholder="Last Name" onfocus="">
+	</div>
+	<div class="sessionUpdateAddress1">
+		<input type="text" id="sessionUpdateAddress1" placeholder="Address 1" onfocus="">
+	</div>
+	<div class="sessionUpdateAddress2">
+		<input type="text" id="sessionUpdateAddress2" placeholder="Address 2" onfocus="">
+	</div>
+	<div class="sessionUpdateCity">
+		<input type="text" id="sessionUpdateCity" placeholder="City" onfocus="">
+	</div>
+	<div class="sessionUpdateState">
+		<input type="text" id="sessionUpdateState" placeholder="State" onfocus="">
+	</div>
+	<div class="sessionUpdateZip">
+		<input type="text" id="sessionUpdateZip" placeholder="Zip" onfocus="">
+	</div>
+	<div class="sessionUpdateButton">
+		<input type="button" class="button" value="Update Session Attributes" onclick="updateSessionInformation()">
+	</div>
+</body>
+<script type="text/javascript">
+	// display userSession object
+	function displaySessionInformation() {
+		// empty sessionDisplay textarea
+		document.getElementById("sessionDisplay").value = "";
+		// load userSession object into sessionDisplay textarea
+		document.getElementById("sessionDisplay").value += userSession.firstName.toUpperCase() +"  "+ userSession.lastName.toUpperCase() +"\n\n"+ userSession.address1.toUpperCase() +"  "+ userSession.address2.toUpperCase() +"\n"+ userSession.city.toUpperCase() +"  "+ userSession.state.toUpperCase() +"\t"+ userSession.zip.toUpperCase();
+	}
+	// update userSession object
+	function updateSessionInformation() {
+		// check firstName for update
+		if (document.getElementById("sessionUpdateFirstName").value != "") {
+			userSession.firstName = document.getElementById("sessionUpdateFirstName").value;
+			document.getElementById("sessionUpdateFirstName").value = "";
+		}
+		// check lastName for update
+		if (document.getElementById("sessionUpdateLastName").value != "") {
+			userSession.lastName = document.getElementById("sessionUpdateLastName").value;
+			document.getElementById("sessionUpdateLastName").value = "";
+		}
+		// check address1 for update
+		if (document.getElementById("sessionUpdateAddress1").value != "") {
+			userSession.address1 = document.getElementById("sessionUpdateAddress1").value;
+			document.getElementById("sessionUpdateAddress1").value = "";
+			// check address2 is blank
+			if (document.getElementById("sessionUpdateAddress2").value == "") {
+				userSession.address2 = "";
+				document.getElementById("sessionUpdateAddress2").value = "";
+			}
+		}
+		// check address2 for update - if blank, wipe input and update
+		if (document.getElementById("sessionUpdateAddress2").value != "") {
+			userSession.address2 = document.getElementById("sessionUpdateAddress2").value;
+			document.getElementById("sessionUpdateAddress2").value = "";
+		} else {
+			document.getElementById("sessionUpdateAddress2").value = "";
+		}
+		// check city for update
+		if (document.getElementById("sessionUpdateCity").value != "") {
+			userSession.city = document.getElementById("sessionUpdateCity").value;
+			document.getElementById("sessionUpdateCity").value = "";
+		}
+		// check state for update
+		if (document.getElementById("sessionUpdateState").value != "") {
+			userSession.state = document.getElementById("sessionUpdateState").value;
+			document.getElementById("sessionUpdateState").value = "";
+		}
+		// check zip for update
+		if (document.getElementById("sessionUpdateZip").value != "") {
+			userSession.zip = document.getElementById("sessionUpdateZip").value;
+			document.getElementById("sessionUpdateZip").value = "";
+		}
+		// update userSession object & sessionDisplay textarea
+		displaySessionInformation();
+	}
+</script>
+</html>

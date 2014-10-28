@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+    <!--
+    BACKGROUND IMAGE CHOICES:
+    1) auburn tiger - http://www.skylinepictures.com/Auburn_University_au62_large_sma.jpg
+    2) b/w auburn university samford hall - http://www.higheredjobs.com/images/AccountImages/3170_1.gif
+    -->
+<html>
+<head>
+    <title>Taylor's Simple CSS Calculator</title>
+    <style type="text/css">
+        .calculator {
+            width: 250px;
+            height: 325px;
+            border-radius: 15px;
+            border: 2px black solid;
+            background-image: url("http://www.skylinepictures.com/Auburn_University_au62_large_sma.jpg");
+            background-size: 250px 325px;
+            background-position: top;
+            background-repeat: no-repeat;
+            position: relative;
+            top: 100px;
+            left: 100px; <!-- move to center -->
+        }
+        .title {
+            color: black;
+            font-size: 15px;
+            text-align: center;
+        }
+        .display {
+            width: 220px;
+            height: 40px;
+            background-color: #222222;
+            position: relative;
+            top: 15px;
+            left: 15px;
+        }
+        .display input {
+            width: 210px;
+            height: 30px;
+            background-color: #CDCDCD;
+            position: relative;
+            top: 2px;
+            left: 2px;
+            color: black;
+            font-size: 20px;
+            text-align: right;
+        }
+        .digits {
+            position: relative;
+            top: 15px;
+        }
+        .button {
+            width: 45px;
+            height: 30px;
+            border: none;
+            border-radius: 10px;
+            border-top: 2px solid transparent;
+            margin-left: 12px;
+            cursor: pointer;
+        }
+        .button.orange {
+            background-color: #FF6600;
+            border-top: 2px #FF6600 solid;
+            border-bottom: 2px black solid;
+            color: white;
+            font-size: 12px;
+        }
+        .orange:active {
+            border-top: 2px black solid;
+            border-bottom: 2px #FF6600 solid;
+        }
+        .button.blue {
+            background-color: #0000FF;
+            border-top: 2px #0000FF solid;
+            border-bottom: 2px black solid;
+            color: white;
+            font-size: 12px;
+        }
+        .blue:active {
+            border-top: 2px black solid;
+            border-bottom: 2px #0000FF solid;
+        }
+        .button.clear {
+            width: 230px;
+            height: 30px;
+            background-color: #303030;
+            border-top: 2px #303030 solid;
+            border-bottom: 2px black solid;
+            color: white;
+            font-size: 12px;
+        }
+        .clear:active {
+            border-top: 2px black solid;
+            border-bottom: 2px #303030 solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="title">Taylor's Simple CSS Calculator</div>
+        <div class="display"><input type="text" id="display" readonly></div>
+        <div class="digits">
+            <p>
+                <input type="button" class="button blue" value="7" onclick='clickDigit("7")'>
+                <input type="button" class="button blue" value="8" onclick='clickDigit("8")'>
+                <input type="button" class="button blue" value="9" onclick='clickDigit("9")'>
+                <input type="button" class="button orange" value="/" onclick='clickDigit("/")'>
+            </p>
+            <p>
+                <input type="button" class="button blue" value="4" onclick='clickDigit("4")'>
+                <input type="button" class="button blue" value="5" onclick='clickDigit("5")'>
+                <input type="button" class="button blue" value="6" onclick='clickDigit("6")'>
+                <input type="button" class="button orange" value="*" onclick='clickDigit("*")'>
+            </p>
+            <p>
+                <input type="button" class="button blue" value="1" onclick='clickDigit("1")'>
+                <input type="button" class="button blue" value="2" onclick='clickDigit("2")'>
+                <input type="button" class="button blue" value="3" onclick='clickDigit("3")'>
+                <input type="button" class="button orange" value="-" onclick='clickDigit("-")'>
+            </p>
+            <p>
+                <input type="button" class="button blue" value="." onclick='clickDigit(".")'>
+                <input type="button" class="button blue" value="0" onclick='clickDigit("0")'>
+                <input type="button" class="button orange" value="=" onclick='equalsButton()'>
+                <input type="button" class="button orange" value="+" onclick='clickDigit("+")'>
+            </p>
+            <p>
+                <input type="button" class="button clear" value="C L E A R" onclick='clearDisplay("")'>
+            </p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    function clickDigit(value) {
+        document.getElementById("display").value += value;
+    }
+    function equalsButton() {
+        try {
+            document.getElementById("display").value = eval(document.getElementById("display").value);
+        } catch(e) {
+            document.getElementById("display").value = ('Error');
+        }
+    }
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+</script>
+</html>
