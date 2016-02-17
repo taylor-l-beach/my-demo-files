@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Taylor's Completed React Tutorial</title>
+    <!-- Not present in the tutorial. Just for basic styling. -->
+    <link rel="stylesheet" href="css/base.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+
+      /*
+      * Example JSON object. Contains key/value pairs: 'id', 'author', and 'text'.
+      */
+      var json = [
+        { id: 1, author: "Taylor", text: "something smells *fishy*" },
+        { id: 2, author: "Tech", text: "tech wuz here" }
+      ];
+
+      /*
+      * Comment - simple object for this page
+      *
+      * @param - id (generated)
+      * @param - author (required)
+      * @param - text (required)
+      */
+      var Comment = React.createClass({
+        rawMarkup: function() {
+          var rawMarkup = marked( this.props.children.toString(), { sanitize: true } );
+          return { __html: rawMarkup };
+        },
+        render: function() {
+          return(
+            <div className="comment">
+              <h2 className="commentAuthor">
+                { this.props.author }
+              </h2>
+              <span dangerouslySetInnerHTML = { this.rawMarkup() } />
+            </div>
+          );
+        }
+      });
+
+      /*
+      * CommentList - responsible for layout of individual Comment objects.
+      */
+      var CommentList = React.createClass({
+        render: function() {
+          var commentNodes = this.props.json.map(function( post ) {
+            return(
+              <Comment author={ post.author } key={ post.id }>
+                { post.text }
+              </Comment>
+            );
+          })
+          return(
+            <div className="commentList">
+              {commentNodes}
+            </div>
+          );
+        }
+      });
+
+      /*
+      * CommentForm - the form where the user enters their name and their comment. Handles the submission form to add a new Comment to the CommentList.
+      *
+      * @param - author (required)
+      * @param - comment (required)
+      */
+      var CommentForm = React.createClass({
+        getInitialState: function() {
+          return { author: '', text: '' };
+        },
+        handleAuthorChange: function(e) {
+          this.setState({ author: e.target.value });
+        },
+        handleCommentChange: function(e) {
+          this.setState({ text: e.target.value });
+        },
+        handleSubmit: function(e) {
+          e.preventDefault();
+          var author = this.state.author.trim();
+          var text = this.state.text.trim();
+          if (!text || !author) {
+            return;
+          }
+          this.props.onCommentSubmit({ author: author, text: text });
+          this.setState({ author: '', text: '' });
+        },
+        render: function() {
+          return(
+            <form className="commentForm" onSubmit={ this.handleSubmit }>
+              <input
+                type="text"
+                placeholder="Name"
+                value={ this.state.author }
+                onChange={ this.handleAuthorChange }/>
+              <input
+                type="text"
+                placeholder="Something goes here..."
+                value={ this.state.text }
+                onChange={ this.handleCommentChange }/>
+              <input type="submit" value="POST"/>
+            </form>
+          );
+        }
+      });
+
+      /*
+      * CommentBox - the main handler for this example.
+      */
+      var CommentBox = React.createClass({
+        getInitialState: function() {
+          return { json: [] };
+        },
+        loadCommentsFromServer: function() {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+              this.setState({ json: data });
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
+        handleCommentSubmit: function(post) {
+          var comments = this.state.json;
+          post.id = Date.now();
+          var newComments = comments.concat([ post ]);
+          this.setState({ json: newComments });
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            type: 'POST',
+            data: post,
+            success: function(data) {
+              this.setState({ json: data });
+            }.bind(this),
+            error: function(xhr, status, err) {
+              this.setState({ json: comments });
+              console.error( this.props.url, status, err.toString() );
+            }.bind(this)
+          });
+        },
+        componentDidMount: function() {
+          this.loadCommentsFromServer();
+          setInterval( this.loadCommentsFromServer, this.props.pollInterval );
+        },
+        render: function() {
+          return(
+            <div className="commentBox">
+              <h1>Comments</h1>
+              <CommentList json={ this.state.json }/>
+              <CommentForm onCommentSubmit={ this.handleCommentSubmit }/>
+            </div>
+          );
+        }
+      });
+
+      
+      /*
+      * Return CommentBox to the page
+      */
+      ReactDOM.render(
+        <CommentBox url="/api/comments" pollInterval={10000}/>,
+        document.getElementById('content')
+      );
+
+    </script>
+  </body>
+</html>
